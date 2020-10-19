@@ -4,4 +4,5 @@ venv/
 .git*
 data/
 local/
-
+.vscode/
+.python-version
