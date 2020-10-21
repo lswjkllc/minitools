@@ -8,10 +8,10 @@
         $(function(){
             // console.log($);
             $("#submit").click(function(){
-                var data = new FormData($("#image-form"));
+                var data = new FormData($("#image-form")[0]);
                 $.ajax({
                     type: "post",
-                    url: "http://localhost:8000/ocr/server",
+                    url: "{{ endpoint }}/ocr/server",
                     data: data,
                     processData: false,
                     contentType: false,

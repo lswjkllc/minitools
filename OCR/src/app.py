@@ -5,10 +5,11 @@ from sanic import Sanic
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .blueprints import ocr
+from .config import config
 from .utils import image2base64, TencentCloudOCR, BaseFile
 
 
-app = Sanic(__name__)
+app = Sanic(config["NAME"])
 
 app.register_blueprint(ocr)
 
@@ -30,5 +31,7 @@ async def pop_temp_file(request, response):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=False, workers=1)
+    app.run(host=config["HOST"], port=config["PORT"], \
+        debug=config["DEBUG"], workers=config["WORKERS"], \
+        auto_reload=config["AUTO_RELOAD"], access_log=config["ACCESS_LOG"])
     

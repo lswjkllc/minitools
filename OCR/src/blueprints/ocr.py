@@ -6,6 +6,7 @@ from sanic import Blueprint, response
 from sanic.response import html
 
 from .common import response_json, ResponseCode
+from ..config import  config
 from ..utils import TencentCloudOCR, BaseFile
 
 ocr = Blueprint('ocr', url_prefix='/ocr')
@@ -13,7 +14,7 @@ ocr = Blueprint('ocr', url_prefix='/ocr')
 @ocr.get("/index")
 async def index(request):
     template = request.app.template_env.get_template("web/index.html")
-    html_content = template.render(name="ocr")
+    html_content = template.render(name="ocr", endpoint=config["SERVER_ENDPOINT"])
     return html(html_content)
 
 @ocr.post("/server")
