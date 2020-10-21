@@ -22,7 +22,7 @@ async def server(request):
     req_files = request.files
     ocr_file = req_files.get("image")
     if ocr_file is None:
-        return response_json(ResponseCode.FAIL.value, "请求文件不存在")
+        return response_json(ResponseCode.FAIL, "请求文件不存在")
     # 识别
     file_name = ocr_file.name
     file_type = ocr_file.type
@@ -31,16 +31,4 @@ async def server(request):
     res, err = TencentCloudOCR.englishOCR(bs64)
     if err is not None:
         return response_json(ResponseCode.FAIL.value, f"OCR识别出错: { err }")
-    # 写临时文件
-    meta_name, _ = os.path.splitext(file_name)
-    cur_milli_st = int(time.time() * 1000)
-    workdir = os.getcwd()
-    file_path = os.path.join(workdir, f"data/temp/{ meta_name }_{ str(cur_milli_st) }.txt")
-    # 将临时文件路径存入 request
-    request.headers["temp_file"] = file_path
-    # 写临时文件
-    err = BaseFile(file_path).write(res["data"])
-    if err is not None:
-        return response_json(ResponseCode.FAIL.value, f"文件写入错误: { err }")
-
-    return await response.file(file_path)
+    return response_json(texts=res["data"])
