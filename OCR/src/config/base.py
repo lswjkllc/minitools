@@ -10,7 +10,7 @@ UPLOAD_DIR = "uploads"
 LOG_PATH = "/tmp"                                 # os.path.expanduser("~/data/app/ocr/data/")
 # 服务监听地址和端口
 HOST = "0.0.0.0"
-PORT = 8000
+PORT = 8002
 # 是否为调试模式
 DEBUG = False
 # 是否热加载代码
